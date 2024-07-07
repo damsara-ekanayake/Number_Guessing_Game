@@ -4,6 +4,7 @@ bool isCorrectNumber  = false;
 bool isPlaying = true;
 Random random = new Random();
 int playerGuess;
+int guessCount = 1;
 int randomNumber = random.Next(1, 100);
 
 while (isPlaying)
@@ -16,7 +17,7 @@ void GameFunction()
 {
     do
     {
-        Console.WriteLine("\n -- Enter a number between 1 and 100 --");
+        Console.WriteLine("\n -- Enter a number between 1 and 100 -- \n        you have only 5 chances ");
         //Console.WriteLine(randomNumber);
         Console.Write("\n     ENTER YOUR GUESS HERE >>>>> ");
         var input = Console.ReadLine();
@@ -34,6 +35,13 @@ void GameFunction()
             {
                 //Console.WriteLine("valid guess");
                 CheckPlayerGuess();
+                guessCount++;
+
+                if (guessCount > 5 && playerGuess != randomNumber)
+                {
+                    Console.WriteLine($"\n\t     YOU LOSE!\n       CORRRECT NUMBER IS : {randomNumber}");
+                    isCorrectNumber = true;
+                }
             }
         }
         else
@@ -51,15 +59,15 @@ void CheckPlayerGuess()
 {
     if (playerGuess > randomNumber)
     {
-        Console.WriteLine("   \n        your guess is too high\n\n*****************************************");
+        Console.WriteLine($" \n\t  -- Guess : {guessCount} --  \n\n        your guess is too high\n\n*****************************************");
     }
     else if (playerGuess < randomNumber)
     {
-        Console.WriteLine("   \n        your guess is too low\n\n*****************************************");
+        Console.WriteLine($" \n\t  -- Guess : {guessCount} --  \n\n        your guess is too low\n\n*****************************************");
     }
     else if (playerGuess == randomNumber)
     {
-        Console.WriteLine(" \n  Congratulations! Your guess is correct \n\n*****************************************");
+        Console.WriteLine($" \n\t  -- Guess : {guessCount} -- \n\n CONGRATULATIONS! YOUR GUESS IS CORRECT \n\n*****************************************");
         isCorrectNumber = true;
     }
 }
@@ -72,13 +80,14 @@ void PlayAgain()
     if (input == "Y" || input == "y")
     {
         isCorrectNumber = false;
+        guessCount = 1;
         randomNumber = random.Next(1, 100);
         //GameFunction();
     }
     else if (input == "N" || input == "n")
     {
         isPlaying = false;
-        Console.WriteLine("\n\tTHANK YOU <3\n   BY MALFUNCTION SOFTWARE");
+        Console.WriteLine("\n\t   THANK YOU <3\n\t\t*\n      BY MALFUNCTION SOFTWARE");
         Console.ReadKey();
     }
     else
